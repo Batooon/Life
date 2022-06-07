@@ -167,8 +167,8 @@ MonoBehaviour:
   _deadCell: {fileID: 11400000, guid: cf8d6c9a33957e64c9546e533cef8372, type: 2}
   _renderField: {fileID: 2065833123}
   _fieldWidth: 18
-  _fieldHeight: 10
-  _iterationRepeatRate: 0.3
+  _fieldHeight: 20
+  _iterationRepeatRate: 0.1
   _iterationRepeatTime: 0
 --- !u!20 &519420031
 Camera:

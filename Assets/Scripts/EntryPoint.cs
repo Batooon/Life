@@ -1,5 +1,13 @@
-﻿using UnityEngine;
+﻿using Logic;
+using UnityEngine;
 using UnityEngine.Tilemaps;
+using Utils;
+
+public static class Parameters
+{
+    public const int RightMouseButton = 1;
+    public const int LeftMouseButton = 0;
+}
 
 public class EntryPoint : MonoBehaviour
 {
@@ -15,7 +23,9 @@ public class EntryPoint : MonoBehaviour
     private Field _gameField;
     private Lifecycle _lifecycle;
     private CustomCellDrawer _cellDrawer;
-    private bool _simulationStarted = false;
+    private bool _simulationStarted;
+
+    private Vector3 _mousePosition;
 
     private void Awake()
     {
@@ -33,21 +43,22 @@ public class EntryPoint : MonoBehaviour
 
     private void Update()
     {
-        if (_simulationStarted == false)
+        if (_simulationStarted) 
+            return;
+        
+        _mousePosition = Input.mousePosition;
+            
+        if (Input.GetMouseButtonDown(Parameters.LeftMouseButton))
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                _cellDrawer.PlaceNewCell(Input.mousePosition);
-                _gameField.Render();
-                _gameField.SetCellNeighbours();
-            }
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                _cellDrawer.RemoveCell(Input.mousePosition);
-                _gameField.Render();
-                _gameField.SetCellNeighbours();
-            }
+            _cellDrawer.PlaceNewCell(_mousePosition);
+            _gameField.Render();
+            _gameField.SetCellNeighbours();
+        }
+        else if (Input.GetMouseButtonDown(Parameters.RightMouseButton))
+        {
+            _cellDrawer.RemoveCell(_mousePosition);
+            _gameField.Render();
+            _gameField.SetCellNeighbours();
         }
     }
 

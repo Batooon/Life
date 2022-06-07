@@ -1,70 +1,61 @@
 ﻿using UnityEngine.Tilemaps;
 
-public struct Cell
+namespace Logic
 {
-    public static int CenterCellNeighbours = 8;
-    public static int BorderCellNeighbours = 5;
-    public static int CornerCellNeighbours = 3;
-    public static Tile AliveTile;
-    public static Tile DeadTile;
-
-    public Tile CellTile
+    public struct Cell
     {
-        get
+        public const int CenterCellNeighbours = 8;
+        public const int BorderCellNeighbours = 5;
+        public const int CornerCellNeighbours = 3;
+        public static Tile AliveTile;
+        public static Tile DeadTile;
+
+        public Tile CellTile => IsAlive ? AliveTile : DeadTile;
+
+        public bool IsAlive { get; set; }
+
+        private Cell[] _neighbours;
+
+        public Cell(bool isAlive)
         {
-            return _isAlive ? AliveTile : DeadTile;
-        }
-    }
-
-    private bool _isAlive;
-
-    public bool IsAlive
-    {
-        get => _isAlive;
-        set => _isAlive = value;
-    }
-
-    private Cell[] _neighbours;
-
-    public Cell(bool isAlive)
-    {
-        _isAlive = isAlive;
-        _neighbours = null;
-    }
-
-    public void SetNeighbours(Cell[] neighbours)
-    {
-        _neighbours = neighbours;
-    }
-
-    public void Update()
-    {
-        int aliveNeighbours = 0;
-        for (int i = 0; i < _neighbours.Length; i++)
-        {
-            if (_neighbours[i].IsAlive)
-                aliveNeighbours += 1;
+            IsAlive = isAlive;
+            _neighbours = null;
         }
 
-        if (_isAlive && (aliveNeighbours == 2 || aliveNeighbours == 3))
-            return;
-
-        if (_isAlive && aliveNeighbours <= 1)
+        public void SetNeighbours(Cell[] neighbours)
         {
-            _isAlive = false;
-            return;
+            _neighbours = neighbours;
         }
 
-        if (_isAlive && aliveNeighbours >= 4)
+        public void Update()
         {
-            _isAlive = false;
-            return;
-        }
+            int aliveNeighbours = 0;
+            for (int i = 0; i < _neighbours.Length; i++)
+            {
+                if (_neighbours[i].IsAlive)
+                    aliveNeighbours += 1;
+            }
 
-        if (_isAlive == false && aliveNeighbours == 3)
-        {
-            _isAlive = true;
-            return;
+            if (IsAlive && (aliveNeighbours == 2 || aliveNeighbours == 3))
+                return;
+
+            if (IsAlive && aliveNeighbours <= 1)
+            {
+                IsAlive = false;
+                return;
+            }
+
+            if (IsAlive && aliveNeighbours >= 4)
+            {
+                IsAlive = false;
+                return;
+            }
+
+            if (IsAlive == false && aliveNeighbours == 3)
+            {
+                IsAlive = true;
+                return;
+            }
         }
     }
 }

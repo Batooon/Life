@@ -1,31 +1,35 @@
-﻿using UnityEngine;
+﻿using Logic;
+using UnityEngine;
 
-public class CustomCellDrawer
+namespace Utils
 {
-    private Field _field;
-    private Grid _grid;
-
-    public CustomCellDrawer(Field field, Grid grid)
+    public class CustomCellDrawer
     {
-        _field = field;
-        _grid = grid;
-    }
+        private readonly Field _field;
+        private readonly Grid _grid;
 
-    public void PlaceNewCell(Vector3 screenPosition)
-    {
-        _field.AddCell(FindCellCoordinates(screenPosition));
-    }
+        public CustomCellDrawer(Field field, Grid grid)
+        {
+            _field = field;
+            _grid = grid;
+        }
 
-    public void RemoveCell(Vector3 screenPosition)
-    {
-        _field.RemoveCell(FindCellCoordinates(screenPosition));
-    }
+        public void PlaceNewCell(Vector3 screenPosition)
+        {
+            _field.AddCell(FindCellCoordinates(screenPosition));
+        }
 
-    private Vector3Int FindCellCoordinates(Vector3 mousePosition)
-    {
-        Vector3 worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
+        public void RemoveCell(Vector3 screenPosition)
+        {
+            _field.RemoveCell(FindCellCoordinates(screenPosition));
+        }
 
-        Vector3Int cellPosition = _grid.WorldToCell(worldPoint);
-        return cellPosition;
+        private Vector3Int FindCellCoordinates(Vector3 mousePosition)
+        {
+            Vector3 worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
+
+            Vector3Int cellPosition = _grid.WorldToCell(worldPoint);
+            return cellPosition;
+        }
     }
 }

@@ -1,23 +1,26 @@
-﻿public class Lifecycle
+﻿namespace Logic
 {
-    public void Iterate(Field field)
+    public class Lifecycle
     {
-        for (int i = 0; i < field.Cells.GetLength(0); i++)
+        public void Iterate(Field field)
         {
-            for (int j = 0; j < field.Cells.GetLength(1); j++)
+            for (var i = 0; i < field.Cells.GetLength(0); i++)
             {
-                field.Cells[i, j].Update();
+                for (var j = 0; j < field.Cells.GetLength(1); j++)
+                {
+                    field.Cells[i, j].Update();
+                }
             }
-        }
 
-        for (int i = 0; i < field.Cells.GetLength(0); i++)
-        {
-            for (int j = 0; j < field.Cells.GetLength(1); j++)
+            for (var i = 0; i < field.Cells.GetLength(0); i++)
             {
-                if (field.Cells[i, j].IsAlive)
-                    field.AddCell(i, j);
-                else
-                    field.RemoveCell(i, j);
+                for (var j = 0; j < field.Cells.GetLength(1); j++)
+                {
+                    if (field.Cells[i, j].IsAlive)
+                        field.AddCell(i, j);
+                    else
+                        field.RemoveCell(i, j);
+                }
             }
         }
     }
