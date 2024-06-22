@@ -166,8 +166,8 @@ MonoBehaviour:
   _aliveCell: {fileID: 11400000, guid: 11c1f76c76440ff4b94b2ad14e1dbe31, type: 2}
   _deadCell: {fileID: 11400000, guid: cf8d6c9a33957e64c9546e533cef8372, type: 2}
   _renderField: {fileID: 2065833123}
-  _fieldWidth: 18
-  _fieldHeight: 20
+  _fieldWidth: 50
+  _fieldHeight: 50
   _iterationRepeatRate: 0.1
   _iterationRepeatTime: 0
 --- !u!20 &519420031
